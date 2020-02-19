@@ -1,0 +1,80 @@
+﻿<Page
+    x:Class="PowerCenter.UWP.Views.MainView"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    xmlns:controls="using:PowerCenter.UWP.Controls"
+    xmlns:viewModels="using:PowerCenter.UWP.ViewModels"
+    mc:Ignorable="d"
+    DataContext="{Binding Source={StaticResource locator}, Path=MainVM}"
+    d:DataContext="{d:DesignInstance Type=viewModels:MainViewModel}">
+
+    <Page.Resources>
+        <BitmapImage x:Key="sleepImage" UriSource="/Assets/UI/SleepImage.png" />
+    </Page.Resources>
+
+    <Page.Background>
+        <AcrylicBrush TintOpacity="0.5" BackgroundSource="HostBackdrop" />
+    </Page.Background>
+    
+    <Grid>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="32" />
+            <RowDefinition Height="*" />
+        </Grid.RowDefinitions>
+
+        <TextBlock Grid.Row="0" 
+                   Text="POWER CENTER" Margin="8,0"
+                   FontSize="16" FontWeight="Bold" FontFamily="Bahnschrift"
+                   Foreground="Black" 
+                   HorizontalAlignment="Left" VerticalAlignment="Center"
+                   IsHitTestVisible="False" />
+
+        <Grid Grid.Row="1">
+            
+            <Grid.Transitions>
+                <TransitionCollection>
+                    <EntranceThemeTransition IsStaggeringEnabled="True" 
+                                             FromHorizontalOffset="100" 
+                                             FromVerticalOffset="0" />
+                </TransitionCollection>
+            </Grid.Transitions>
+
+            <StackPanel Orientation="Horizontal" 
+                        Spacing="10"
+                        HorizontalAlignment="Center" VerticalAlignment="Center">                
+                <Button x:Name="sleepButton" Width="140" Command="{Binding SleepCommand}">
+                    <StackPanel>
+                        <Image Margin="5" Source="{StaticResource sleepImage}" />
+                        <TextBlock Text="Sleep" FontFamily="Bahnschrift" HorizontalAlignment="Center"/>
+                    </StackPanel>
+                </Button>
+
+                <Button x:Name="sleepAltButton" Width="140" Command="{Binding SleepAltCommand}">
+                    <StackPanel>
+                        <Image Margin="5" Source="{StaticResource sleepImage}" />
+                        <TextBlock Text="Sleep alternative" FontFamily="Bahnschrift" HorizontalAlignment="Center"/>
+                    </StackPanel>
+                </Button>
+
+                <Button x:Name="displayOffButton" Width="140" Command="{Binding DisplayOffCommand}">
+                    <StackPanel>
+                        <Image Margin="5" Source="{StaticResource sleepImage}" />
+                        <TextBlock Text="Turn display off" FontFamily="Bahnschrift" HorizontalAlignment="Center"/>
+                    </StackPanel>
+                </Button>
+            </StackPanel>
+
+            <Button HorizontalAlignment="Right" VerticalAlignment="Bottom"
+                    Margin="5">
+                <SymbolIcon Symbol="Setting" />
+                <Button.Flyout>
+                    <Flyout>
+                        <controls:SettingsControl DataContext="{Binding SettingsViewModel}" />
+                    </Flyout>
+                </Button.Flyout>
+            </Button>
+        </Grid>
+    </Grid>
+</Page>
